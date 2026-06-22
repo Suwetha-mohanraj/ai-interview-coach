@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import { connectDB } from './config/db.js'
 import authRoutes from './routes/auth.routes.js'
 import userRoutes from './routes/user.routes.js'
+import sessionRoutes from './routes/session.routes.js'
 
 dotenv.config()
 const app = express()
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use('/api/auth', authRoutes)
 app.use('/api/users', userRoutes)
+app.use('/api/sessions', sessionRoutes)
 
 app.get('/', (req, res) => {
   res.json({ message: 'AI Interview Coach API is running' })

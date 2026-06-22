@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import ResumeUpload from '../components/ResumeUpload'
 
 const Dashboard = () => {
-  const { user, logout, setUser } = useAuth()
+  const { user, logout } = useAuth()
   const navigate = useNavigate()
   const [currentUser, setCurrentUser] = useState(user)
 
@@ -19,7 +19,6 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navbar */}
       <nav className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="text-xl">🎯</span>
@@ -27,17 +26,13 @@ const Dashboard = () => {
         </div>
         <div className="flex items-center gap-4">
           <span className="text-sm text-gray-600">Hey, {currentUser?.name?.split(' ')[0]}!</span>
-          <button
-            onClick={handleLogout}
-            className="text-sm text-gray-500 hover:text-red-500 transition-colors"
-          >
+          <button onClick={handleLogout} className="text-sm text-gray-500 hover:text-red-500 transition-colors">
             Logout
           </button>
         </div>
       </nav>
 
       <main className="max-w-4xl mx-auto px-6 py-10">
-        {/* Welcome banner */}
         <div className="bg-indigo-600 rounded-2xl p-6 text-white mb-8">
           <h1 className="text-2xl font-semibold">Welcome, {currentUser?.name} 👋</h1>
           <p className="text-indigo-200 text-sm mt-1">
@@ -47,12 +42,10 @@ const Dashboard = () => {
           </p>
         </div>
 
-        {/* Show resume upload only if no role is set */}
         {!currentUser?.target_role && (
           <ResumeUpload onRoleSelected={handleRoleSelected} />
         )}
 
-        {/* If role is set, show change role option */}
         {currentUser?.target_role && (
           <div className="bg-green-50 border border-green-200 rounded-xl px-5 py-4 mb-6 flex items-center justify-between">
             <div>
@@ -68,7 +61,6 @@ const Dashboard = () => {
           </div>
         )}
 
-        {/* Stats row */}
         <div className="grid grid-cols-3 gap-4 mb-8">
           {[
             { label: 'Sessions done', value: currentUser?.total_sessions ?? 0, icon: '📋' },
@@ -83,7 +75,6 @@ const Dashboard = () => {
           ))}
         </div>
 
-        {/* Start interview CTA */}
         <div className="bg-white rounded-2xl border border-gray-200 p-8 text-center">
           <div className="text-4xl mb-3">🚀</div>
           <h2 className="text-lg font-semibold text-gray-900 mb-1">Ready to practice?</h2>
@@ -93,6 +84,7 @@ const Dashboard = () => {
               : 'Set your target role above to begin'}
           </p>
           <button
+            onClick={() => navigate('/start-interview')}
             disabled={!currentUser?.target_role}
             className={`font-medium px-6 py-2.5 rounded-lg text-sm transition-colors ${
               currentUser?.target_role
@@ -100,7 +92,7 @@ const Dashboard = () => {
                 : 'bg-indigo-100 text-indigo-400 cursor-not-allowed'
             }`}
           >
-            {currentUser?.target_role ? 'Start Interview — coming Week 3' : 'Set a role first'}
+            {currentUser?.target_role ? 'Start Interview' : 'Set a role first'}
           </button>
         </div>
       </main>
